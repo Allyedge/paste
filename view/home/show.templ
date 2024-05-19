@@ -1,0 +1,55 @@
+package home
+
+import "github.com/Allyedge/paste/view/layout"
+
+templ Show() {
+	@layout.Base("Paste - Allyedge") {
+		<div id="editor">
+			fmt.Println("Hello, World!")
+		</div>
+		<div class="absolute position-top-xs position-right-xs">
+			<select class="p-4 bg-white border-none rounded-sm outline-none hover:cursor-pointer transition-colors duration-200 ease-in-out" onchange="changeMode(this.value)">
+				<option value="golang" selected>Golang</option>
+				<option value="python">Python</option>
+				<option value="javascript">JavaScript</option>
+				<option value="typescript">TypeScript</option>
+				<option value="java">Java</option>
+				<option value="c">C</option>
+				<option value="cpp">C++</option>
+				<option value="rust">Rust</option>
+				<option value="ruby">Ruby</option>
+				<option value="elixir">Elixir</option>
+				<option value="php">PHP</option>
+				<option value="html">HTML</option>
+				<option value="css">CSS</option>
+				<option value="scss">SCSS</option>
+				<option value="sass">SASS</option>
+				<option value="less">LESS</option>
+				<option value="json">JSON</option>
+				<option value="yaml">YAML</option>
+				<option value="xml">XML</option>
+				<option value="markdown">Markdown</option>
+				<option value="shell">Shell</option>
+				<option value="powershell">PowerShell</option>
+				<option value="dockerfile">Dockerfile</option>
+				<option value="plaintext">Plain Text</option>
+			</select>
+			<button
+				class="p-4 bg-purple-500 text-white border-none rounded-sm outline-none hover:bg-purple-600 hover:cursor-pointer transition-colors duration-200 ease-in-out"
+				hx-post="/"
+				hx-on:htmx:config-request="event.detail.parameters.code = editor.getValue(); event.detail.parameters.language = language;"
+			>Share</button>
+		</div>
+		<script>
+			let language = "golang";
+			var editor = ace.edit("editor");
+			editor.setTheme("ace/theme/monokai");
+			editor.session.setMode("ace/mode/"+language);
+
+			function changeMode(mode) {
+				language = mode;
+				editor.session.setMode("ace/mode/" + mode);
+			}
+		</script>
+	}
+}

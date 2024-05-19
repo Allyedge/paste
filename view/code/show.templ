@@ -1,0 +1,19 @@
+package code
+
+import "github.com/Allyedge/paste/view/layout"
+
+script setMode(language string) {
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/monokai");
+	editor.session.setMode("ace/mode/"+language);
+	editor.setReadOnly(true);
+}
+
+templ Show(code string, language string) {
+	@layout.Base("Paste - Allyedge") {
+		<div id="editor">
+			{ code }
+		</div>
+		@setMode(language)
+	}
+}
